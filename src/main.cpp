@@ -1,6 +1,9 @@
 #include <vector>
 #include <raylib.h>
 
+int playerScore = 0;
+int cpuScore = 0;
+
 class Ball {
 public:
 
@@ -21,6 +24,16 @@ public:
         DrawCircle(x, y, radius, WHITE);
     }
 
+    void ResetBall(bool playerServe) {
+        x = GetScreenWidth() / 2;
+        y = GetScreenHeight() / 2;
+
+        int direction = 1;
+        if (!playerServe) direction = -1;
+        speedX = direction * 7;
+        speedY = direction * 7;
+    }
+
     void Update() {
         x += speedX;
         y += speedY;
@@ -31,6 +44,16 @@ public:
 
         if (x + radius >= GetScreenWidth() || x - radius <= 0) {
             speedX *= -1;
+        }
+
+        if (x + radius >= GetScreenWidth()) {
+            playerScore++;
+            ResetBall(true);
+        }
+
+        if (x - radius <= 0) {
+            cpuScore++;
+            ResetBall(false);
         }
     }
 };
@@ -146,6 +169,8 @@ int main() {
 
         // Draw line at half court
         DrawLine(screenWidth / 2, 0, screenWidth / 2, screenHeight, WHITE);
+        DrawText(TextFormat("%i", playerScore), screenWidth / 4 - 20, 20, 80, GREEN);
+        DrawText(TextFormat("%i", cpuScore), screenWidth / 4 * 3 - 20, 20, 80, RED);
         
         // Draw ball
         ball.Draw();
