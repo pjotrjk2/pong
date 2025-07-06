@@ -1,4 +1,4 @@
-#include <iostream>
+#include <vector>
 #include <raylib.h>
 
 class Ball
@@ -27,7 +27,16 @@ class Ball
         {
             x += speedX;
             y += speedY;
+
+            if (y + radius >= GetScreenHeight() || y - radius <= 0) {
+                speedY *= -1;
+            }
+
+            if (x + radius >= GetScreenWidth() || x - radius <= 0) {
+                speedX *= -1;
+            }
         }
+        
 };
 
 int main() 
@@ -48,7 +57,7 @@ int main()
         // UPDATE
         ball.Update();
 
-        
+
         ClearBackground(BLACK);
 
         // Draw line at half court
