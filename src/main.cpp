@@ -4,39 +4,85 @@
 class Ball
 {
     public:
-        float x;
-        float y;
-        int speedX, speedY;
-        int radius;
 
-        Ball(float x, float y, int speedX = 0, int speedY = 0, int radius = 20)
-        {
-            this->x = x;
-            this->y = y;
-            this->speedX = speedX;
-            this->speedY = speedY;
-            this->radius = radius;
+    float x;
+    float y;
+    int speedX, speedY;
+    int radius;
+
+    Ball(float x, float y, int speedX = 0, int speedY = 0, int radius = 20)
+    {
+        this->x = x;
+        this->y = y;
+        this->speedX = speedX;
+        this->speedY = speedY;
+        this->radius = radius;
+    }
+
+    void Draw() 
+    {
+        DrawCircle(x, y, radius, WHITE);
+    }
+
+    void Update()
+    {
+        x += speedX;
+        y += speedY;
+
+        if (y + radius >= GetScreenHeight() || y - radius <= 0) {
+            speedY *= -1;
         }
 
-        void Draw() 
+        if (x + radius >= GetScreenWidth() || x - radius <= 0) {
+            speedX *= -1;
+        }
+    }
+};
+
+class Racket
+{
+    public:
+    
+    float x, y;
+    float width, height;
+    int speed;
+
+    Racket(float x, float y, float width, float height, int speed)
+    {
+        this->x = x;
+        this->y = y;
+        this->width = width;
+        this->height = height;
+        this->speed = speed;
+    }
+
+    void Draw() 
+    {
+        DrawRectangle(x, y, width, height, WHITE);
+    }
+
+    void Update()
+    {
+        if (IsKeyDown(KEY_UP)) 
         {
-            DrawCircle(x, y, radius, WHITE);
+            y -= speed;
         }
 
-        void Update()
+        if (IsKeyDown(KEY_DOWN))
         {
-            x += speedX;
-            y += speedY;
-
-            if (y + radius >= GetScreenHeight() || y - radius <= 0) {
-                speedY *= -1;
-            }
-
-            if (x + radius >= GetScreenWidth() || x - radius <= 0) {
-                speedX *= -1;
-            }
+            y += speed;
         }
-        
+
+        if (y <= 0) 
+        {
+            y = 0;
+        }
+
+        if (y + height >= GetScreenHeight()) 
+        {
+            y = GetScreenHeight() - height;
+        }
+    }
 };
 
 int main() 
@@ -50,12 +96,23 @@ int main()
     // Initialize objects
     Ball ball(screenWidth / 2, screenHeight / 2, 7, 7, 20);
 
+    int racketWidth = 25;
+    int racketHeigh = 125;
+    Racket player(
+        racketWidth - 10, 
+        screenHeight / 2 - racketHeigh / 2, 
+        racketWidth, 
+        racketHeigh, 
+        6
+    );
+
     while (!WindowShouldClose())
     {        
         BeginDrawing();
 
         // UPDATE
         ball.Update();
+        player.Update();
 
 
         ClearBackground(BLACK);
@@ -67,7 +124,7 @@ int main()
         ball.Draw();
 
         // Draw rackets
-        DrawRectangle(10, screenHeight / 2 - 60, 25, 120, WHITE);
+        player.Draw();
         DrawRectangle(screenWidth - 35, screenHeight / 2 - 60, 25, 120, WHITE);
 
         EndDrawing();
