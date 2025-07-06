@@ -16,8 +16,9 @@ Uses raylib for graphics.
 With these tutorial from [youtube](https://www.youtube.com/watch?v=VLJlTaFvHo4) is completed.
 
 - [ ] Refactor until happy
-    - [ ] Add Game class for orchestration
-    - [ ] Separate classes and better accomplish decoupling
+    - [x] Add Game class for orchestration
+    - [x] Separate classes and better accomplish decoupling
+    - [ ] Itroduce public as private where needed, as stepaway from tutorial
     - [ ] Game frame as collidable object
     - [ ] Generic collision detection refactor
     - [ ] Advanced bounce physics: add angles, weights, speed vector etc
