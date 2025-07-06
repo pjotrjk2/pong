@@ -1,17 +1,15 @@
 #include <vector>
 #include <raylib.h>
 
-class Ball
-{
-    public:
+class Ball {
+public:
 
     float x;
     float y;
     int speedX, speedY;
     int radius;
 
-    Ball(float x, float y, int speedX = 0, int speedY = 0, int radius = 20)
-    {
+    Ball(float x, float y, int speedX = 0, int speedY = 0, int radius = 20) {
         this->x = x;
         this->y = y;
         this->speedX = speedX;
@@ -19,13 +17,11 @@ class Ball
         this->radius = radius;
     }
 
-    void Draw() 
-    {
+    void Draw() {
         DrawCircle(x, y, radius, WHITE);
     }
 
-    void Update()
-    {
+    void Update() {
         x += speedX;
         y += speedY;
 
@@ -39,16 +35,13 @@ class Ball
     }
 };
 
-class Racket
-{
-    public:
-    
+class Racket {
+public:
     float x, y;
     float width, height;
     int speed;
 
-    Racket(float x, float y, float width, float height, int speed)
-    {
+    Racket(float x, float y, float width, float height, int speed) {
         this->x = x;
         this->y = y;
         this->width = width;
@@ -56,37 +49,54 @@ class Racket
         this->speed = speed;
     }
 
-    void Draw() 
-    {
+    void Draw() {
         DrawRectangle(x, y, width, height, WHITE);
     }
 
-    void Update()
-    {
-        if (IsKeyDown(KEY_UP)) 
-        {
+    void Update() {
+        if (IsKeyDown(KEY_UP)) {
             y -= speed;
         }
 
-        if (IsKeyDown(KEY_DOWN))
-        {
+        if (IsKeyDown(KEY_DOWN)) {
             y += speed;
         }
 
-        if (y <= 0) 
-        {
+        LimitMovement();
+    }
+
+protected:
+    void LimitMovement() {
+        if (y <= 0) {
             y = 0;
         }
 
-        if (y + height >= GetScreenHeight()) 
-        {
+        if (y + height >= GetScreenHeight()) {
             y = GetScreenHeight() - height;
         }
     }
 };
 
-int main() 
-{    
+class CpuRacket: public Racket {
+public:
+
+    CpuRacket(float x, float y, float width, float height, int speed) : Racket(x, y, width, height, speed) {
+    }
+
+    void Update(float ballY) {
+        if (y + height / 2 > ballY) {
+            y -= speed;
+        }
+
+        if (y + height / 2 < ballY) {
+            y += speed;
+        }
+
+        LimitMovement();
+    }
+};
+
+int main() {    
     const int screenWidth = 1280;
     const int screenHeight = 800;
     
@@ -99,10 +109,18 @@ int main()
     int racketWidth = 25;
     int racketHeigh = 125;
     Racket player(
-        racketWidth - 10, 
+        10, 
         screenHeight / 2 - racketHeigh / 2, 
         racketWidth, 
         racketHeigh, 
+        6
+    );
+
+    CpuRacket cpu(
+        screenWidth - racketWidth - 10,
+        screenHeight / 2 - racketHeigh / 2,
+        racketWidth,
+        racketHeigh,
         6
     );
 
@@ -113,6 +131,7 @@ int main()
         // UPDATE
         ball.Update();
         player.Update();
+        cpu.Update(ball.y);
 
 
         ClearBackground(BLACK);
@@ -125,7 +144,7 @@ int main()
 
         // Draw rackets
         player.Draw();
-        DrawRectangle(screenWidth - 35, screenHeight / 2 - 60, 25, 120, WHITE);
+        cpu.Draw();
 
         EndDrawing();
     }

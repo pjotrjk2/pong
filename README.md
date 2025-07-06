@@ -9,7 +9,7 @@ Uses raylib for graphics.
 3. ~~Move the ball around~~
 4. ~~Check for a collision with edges~~
 5. ~~Player movement~~
-6. AI movement
+6. ~~AI movement~~
 7. Check for a collision with rackets
 8. Scoring?
 9. Refactor until happy
