@@ -2,15 +2,6 @@
 #include "Racket.h"
 #include "Ball.h"
 
-Racket::Racket(float x, float y, float width, float height, int speedOld)
-{
-    this->x = x;
-    this->y = y;
-    this->width = width;
-    this->height = height;
-    this->speedOld = speedOld;
-}
-
 void Racket::Draw()
 {
     DrawRectangle(x, y, width, height, WHITE);
@@ -20,12 +11,12 @@ void Racket::Update()
 {
     if (IsKeyDown(KEY_UP))
     {
-        y -= speedOld;
+        y -= speed.y;
     }
 
     if (IsKeyDown(KEY_DOWN))
     {
-        y += speedOld;
+        y += speed.y;
     }
 
     LimitMovement();

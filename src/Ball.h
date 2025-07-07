@@ -10,7 +10,7 @@ class Game;
 class Ball : public IMovable, ICollidable
 {
 public:
-    Ball(float x, float y, Game *game, int speedX = 0, int speedY = 0, int radius = 20) : center{x, y}, game(game), speed{speedX, speedY}, radius(radius) {}
+    Ball(float x, float y, Game *game, float speedX = 0, float speedY = 0, int radius = 20) : center{x, y}, game(game), speed{speedX, speedY}, radius(radius) {}
 
     void Draw();
     void ResetBall(bool playerServe);

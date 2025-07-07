@@ -9,12 +9,7 @@
 class Racket : public ICollidable, IMovable
 {
 public:
-    float x, y;
-    float width, height;
-    int speedOld;
-    Ball *ball;
-
-    Racket(float x, float y, float width, float height, int speed);
+    Racket(float x, float y, float width, float height, float speed) : x(x), y(y), width(width), height(height), speed{0, speed} {};
     void Draw();
     virtual void Update();
     void ShowBall(Ball *ball);
@@ -28,12 +23,13 @@ public:
     float GetMass() override;
 
 protected:
-    void LimitMovement();
-
-private:
+    void LimitMovement();   
+    float x, y;
+    float width, height;
     Vector2 speed;
     float mass;
     Collider hitbox;
+    Ball *ball;
 };
 
 #endif
