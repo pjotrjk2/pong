@@ -1,14 +1,14 @@
 #include <raylib.h>
-#include "racket.h"
-#include "ball.h"
+#include "Racket.h"
+#include "Ball.h"
 
-Racket::Racket(float x, float y, float width, float height, int speed)
+Racket::Racket(float x, float y, float width, float height, int speedOld)
 {
     this->x = x;
     this->y = y;
     this->width = width;
     this->height = height;
-    this->speed = speed;
+    this->speedOld = speedOld;
 }
 
 void Racket::Draw()
@@ -20,12 +20,12 @@ void Racket::Update()
 {
     if (IsKeyDown(KEY_UP))
     {
-        y -= speed;
+        y -= speedOld;
     }
 
     if (IsKeyDown(KEY_DOWN))
     {
-        y += speed;
+        y += speedOld;
     }
 
     LimitMovement();
@@ -47,4 +47,24 @@ void Racket::LimitMovement()
     {
         y = GetScreenHeight() - height;
     }
+}
+
+Vector2 Racket::GetSpeed()
+{
+    return speed;
+}
+
+void Racket::SetSpeed(Vector2 speed)
+{
+    this->speed = speed;
+}
+
+Collider Racket::GetHitbox()
+{
+    return Collider(Rectangle{x, y, width, height});
+}
+
+float Racket::GetMass()
+{
+    return mass;
 }

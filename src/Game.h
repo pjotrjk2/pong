@@ -12,8 +12,11 @@ public:
     void Update();
     void Draw();
     void End();
-    void increasePlayerLeftScore();
-    void increasePlayerRightScre();
+    void IncreasePlayerLeftScore();
+    void IncreasePlayerRightScre();
+
+protected:
+    void CheckCollisions();
 
 private:
     // Default configurations

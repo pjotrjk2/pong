@@ -1,5 +1,5 @@
 #include <raylib.h>
-#include "game.h"
+#include "Game.h"
 
 class Game;
 

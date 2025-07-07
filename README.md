@@ -18,7 +18,8 @@ With these tutorial from [youtube](https://www.youtube.com/watch?v=VLJlTaFvHo4) 
 - [ ] Refactor until happy
     - [x] Add Game class for orchestration
     - [x] Separate classes and better accomplish decoupling
-    - [ ] Itroduce public as private where needed, as stepaway from tutorial
+    - [x] Itroduce public as private where needed, as stepaway from tutorial
+        - [ ] Maybe, idk, check coding practices with Marko i guess...
     - [ ] Game frame as collidable object
     - [ ] Generic collision detection refactor
     - [ ] Advanced bounce physics: add angles, weights, speed vector etc

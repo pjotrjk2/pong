@@ -1,8 +1,12 @@
 #include <raylib.h>
-#include "ball.h"
-#include "racket.h"
-#include "cpu_racket.h"
-#include "game.h"
+#include <raymath.h>
+#include "Ball.h"
+#include "Racket.h"
+#include "CpuRacket.h"
+#include "Game.h"
+#include "Collision.h"
+#include "Collider.h"
+#include "CollisionResult.h"
 
 Game::Game(bool singlePlayer)
 {
@@ -32,6 +36,7 @@ Game::Game(bool singlePlayer)
     }
 
     ball = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, this, 7, 7, 20);
+    ball->ResetBall(false);
 
     playerLeft->ShowBall(ball);
     playerRight->ShowBall(ball);
@@ -49,16 +54,7 @@ void Game::Update()
     playerLeft->Update();
     playerRight->Update();
 
-    // Checking for collisions?
-    if (CheckCollisionCircleRec(Vector2{ball->x, ball->y}, ball->radius, Rectangle{playerLeft->x, playerLeft->y, playerLeft->width, playerLeft->height}))
-    {
-        ball->speedX *= -1;
-    }
-
-    if (CheckCollisionCircleRec(Vector2{ball->x, ball->y}, ball->radius, Rectangle{playerRight->x, playerRight->y, playerRight->width, playerRight->height}))
-    {
-        ball->speedX *= -1;
-    }
+    CheckCollisions();
 }
 
 void Game::Draw()
@@ -84,12 +80,33 @@ void Game::End()
     CloseWindow();
 }
 
-void Game::increasePlayerLeftScore()
+void Game::IncreasePlayerLeftScore()
 {
     playerLeftScore++;
 }
 
-void Game::increasePlayerRightScre()
+void Game::IncreasePlayerRightScre()
 {
     playerRightScore++;
+}
+
+void Game::CheckCollisions()
+{
+    // check collision between ball and left racket
+    CollisionResult collisionResult = Collision::TestCollision(ball->GetHitbox(), playerRight->GetHitbox());
+    if (collisionResult.collided)
+    {
+        Vector2 ballSpeed = ball->GetSpeed();
+        Vector2 reflected = Vector2Reflect(ballSpeed, collisionResult.normal);
+        ball->SetSpeed(reflected);
+    }
+
+    // check collision between ball and left racket
+    collisionResult = Collision::TestCollision(ball->GetHitbox(), playerLeft->GetHitbox());
+    if (collisionResult.collided)
+    {
+        Vector2 ballSpeed = ball->GetSpeed();
+        Vector2 reflected = Vector2Reflect(ballSpeed, collisionResult.normal);
+        ball->SetSpeed(reflected);
+    }
 }

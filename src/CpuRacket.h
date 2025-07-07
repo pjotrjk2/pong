@@ -1,7 +1,7 @@
 #ifndef CPU_RACKET_H
 #define CPU_RACKET_H
 
-#include "racket.h"
+#include "Racket.h"
 
 class Racket;
 
