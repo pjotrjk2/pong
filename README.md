@@ -20,7 +20,9 @@ With these tutorial from [youtube](https://www.youtube.com/watch?v=VLJlTaFvHo4) 
     - [x] Separate classes and better accomplish decoupling
     - [x] Itroduce public as private where needed, as stepaway from tutorial
         - [ ] Maybe, idk, check coding practices with Marko i guess...
-    - [ ] Game frame as collidable object
+    - [x] Game frame as collidable object
+    - [ ] Goals as collidable objects i guess
+    - [ ] Game object refacor and interface segragation
     - [ ] Generic collision detection refactor
     - [ ] Advanced bounce physics: add angles, weights, speed vector etc
     - [ ] Better AI
