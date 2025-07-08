@@ -1,22 +1,20 @@
 #include "CpuRacket.h"
 #include "Racket.h"
 #include "Ball.h"
-
-CpuRacket::CpuRacket(float x, float y, float width, float height, int speed) : Racket(x, y, width, height, speed)
-{
-}
+#include "raymath.h"
 
 void CpuRacket::Update()
 {
-    if (y + height / 2 > ball->GetHitbox().center.y)
-    {
-        y -= speed.y;
-    }
-
+    Vector2 direction = {0, 0};
     if (y + height / 2 < ball->GetHitbox().center.y)
     {
-        y += speed.y;
+        direction = {0, 1};
+    }
+    if (y + height / 2 > ball->GetHitbox().center.y)
+    {
+        direction = {0, -1};
     }
 
-    LimitMovement();
+    Racket::SetSpeed(Vector2Multiply(maxSpeed, direction));
+    Racket::Update();
 }

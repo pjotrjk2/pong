@@ -1,8 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
-class Racket;
-class Ball;
+#include "Ball.h"
+#include "Racket.h"
+#include "Frame.h"
 
 class Game
 {
@@ -17,6 +18,7 @@ public:
 
 protected:
     void CheckCollisions();
+    void DispatchEvents();
 
 private:
     // Default configurations
@@ -29,13 +31,15 @@ private:
     const int RACKET_HEIGHT = 125;
     const int BALL_RADIUS = 20;
 
-    const int RACKET_SPEED = 7;
-    const int BALL_SPEED = 7;
+    const float RACKET_SPEED = 6.0f;
+    const float BALL_SPEED = 7.0f;
 
     // Game objects
     Racket *playerLeft;
     Racket *playerRight;
     Ball *ball;
+
+    Frame *frameTop, *frameBottom;
 
     int playerLeftScore = 0;
     int playerRightScore = 0;

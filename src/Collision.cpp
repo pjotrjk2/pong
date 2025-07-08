@@ -76,6 +76,41 @@ CollisionResult Collision::CircleVsRect(const CircleCollider &circle, const Rect
 
 CollisionResult Collision::RectVsRect(const RectCollider &a, const RectCollider &b)
 {
-    // TODO add implementation
-    return CollisionResult();
+    Vector2 closestPoint;
+    closestPoint.x = (std::max(a.rect.x, b.rect.x) + std::min(a.rect.x + a.rect.width, b.rect.x + b.rect.width)) / 2;
+    closestPoint.y = (std::max(a.rect.y, b.rect.y) + std::min(a.rect.y + a.rect.height, b.rect.y + b.rect.height)) / 2;
+
+    // From center to closest point
+    Vector2 delta = Vector2Subtract(Vector2{a.rect.x + a.rect.width / 2, a.rect.y + a.rect.height / 2}, closestPoint);
+    float distanceSq = Vector2LengthSqr(delta);
+
+    CollisionResult collisionResult;
+    // Is vector itensiti of distance less than vector representing diagonal?
+    if (distanceSq <= a.rect.width * a.rect.width / 4 + a.rect.height * a.rect.height / 4)
+    {
+        collisionResult.collided = true;
+        collisionResult.contactPoint = closestPoint;
+
+        // Where the fuck is contact closest?
+        float left = fabsf(closestPoint.x - a.rect.x);
+        float right = fabsf(closestPoint.x - (a.rect.x + a.rect.width));
+        float top = fabsf(closestPoint.y - a.rect.y);
+        float bottom = fabsf(closestPoint.y - (a.rect.y + a.rect.height));
+
+        float minDist = std::min({left, right, top, bottom});
+
+        if (minDist == left)
+            collisionResult.normal = {-1, 0};
+        else if (minDist == right)
+            collisionResult.normal = {1, 0};
+        else if (minDist == top)
+            collisionResult.normal = {0, -1};
+        else if (minDist == bottom)
+            collisionResult.normal = {0, 1};
+
+        return collisionResult;
+    }
+
+    collisionResult.collided = false;
+    return collisionResult;
 }

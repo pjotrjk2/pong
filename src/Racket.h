@@ -28,7 +28,6 @@ protected:
     float width, height;
     Vector2 speed;
     float mass;
-    Collider hitbox;
     Ball *ball;
 };
 

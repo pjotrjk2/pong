@@ -9,35 +9,12 @@ void Racket::Draw()
 
 void Racket::Update()
 {
-    if (IsKeyDown(KEY_UP))
-    {
-        y -= speed.y;
-    }
-
-    if (IsKeyDown(KEY_DOWN))
-    {
-        y += speed.y;
-    }
-
-    LimitMovement();
+    y += speed.y;
 }
 
 void Racket::ShowBall(Ball *ball)
 {
     this->ball = ball;
-}
-
-void Racket::LimitMovement()
-{
-    if (y <= 0)
-    {
-        y = 0;
-    }
-
-    if (y + height >= GetScreenHeight())
-    {
-        y = GetScreenHeight() - height;
-    }
 }
 
 Vector2 Racket::GetSpeed()
