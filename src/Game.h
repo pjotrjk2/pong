@@ -4,6 +4,7 @@
 #include "Ball.h"
 #include "Racket.h"
 #include "Frame.h"
+#include "Goalpost.h"
 
 class Game
 {
@@ -14,7 +15,7 @@ public:
     void Draw();
     void End();
     void IncreasePlayerLeftScore();
-    void IncreasePlayerRightScre();
+    void IncreasePlayerRightScore();
 
 protected:
     void CheckCollisions();
@@ -40,6 +41,7 @@ private:
     Ball *ball;
 
     Frame *frameTop, *frameBottom;
+    Goalpost *goalLeft, *goalRight;
 
     int playerLeftScore = 0;
     int playerRightScore = 0;

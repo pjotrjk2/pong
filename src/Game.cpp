@@ -13,6 +13,9 @@ Game::Game(bool singlePlayer)
     frameTop = new Frame(0, 5, SCREEN_WIDTH, 15);
     frameBottom = new Frame(0, SCREEN_HEIGHT - 20, SCREEN_WIDTH, 15);
 
+    goalLeft = new Goalpost(0, 0, 10, SCREEN_HEIGHT);
+    goalRight = new Goalpost(SCREEN_WIDTH - 10, 0, 10, SCREEN_HEIGHT);
+
     playerLeft = new Racket(10,
                             SCREEN_HEIGHT / 2 - RACKET_HEIGHT / 2,
                             RACKET_WIDTH,
@@ -39,7 +42,7 @@ Game::Game(bool singlePlayer)
                                     RACKET_SPEED);
     }
 
-    ball = new Ball(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, this);
+    ball = new Ball(this, Vector2{SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f});
     ball->ResetBall(false);
 
     playerLeft->ShowBall(ball);
@@ -77,6 +80,9 @@ void Game::Draw()
     frameBottom->Draw();
     frameTop->Draw();
 
+    goalLeft->Draw();
+    goalRight->Draw();
+
     ball->Draw();
     playerLeft->Draw();
     playerRight->Draw();
@@ -94,7 +100,7 @@ void Game::IncreasePlayerLeftScore()
     playerLeftScore++;
 }
 
-void Game::IncreasePlayerRightScre()
+void Game::IncreasePlayerRightScore()
 {
     playerRightScore++;
 }
@@ -121,6 +127,7 @@ void Game::CheckCollisions()
 
     // check ball and edges collision
     collisionResult = Collision::TestCollision(ball->GetHitbox(), frameBottom->GetHitbox());
+    if (collisionResult.collided)
     {
         Vector2 ballSpeed = ball->GetSpeed();
         Vector2 reflected = Vector2Reflect(ballSpeed, collisionResult.normal);
@@ -128,6 +135,7 @@ void Game::CheckCollisions()
     }
 
     collisionResult = Collision::TestCollision(ball->GetHitbox(), frameTop->GetHitbox());
+    if (collisionResult.collided)
     {
         Vector2 ballSpeed = ball->GetSpeed();
         Vector2 reflected = Vector2Reflect(ballSpeed, collisionResult.normal);
@@ -136,28 +144,48 @@ void Game::CheckCollisions()
 
     // check rackets and edges collision
     collisionResult = Collision::TestCollision(playerLeft->GetHitbox(), frameBottom->GetHitbox());
+    if (collisionResult.collided)
     {
         Vector2 reflected = Vector2Reflect(playerLeft->GetSpeed(), collisionResult.normal);
         playerLeft->SetSpeed(reflected);
     }
 
     collisionResult = Collision::TestCollision(playerLeft->GetHitbox(), frameTop->GetHitbox());
+    if (collisionResult.collided)
     {
         Vector2 reflected = Vector2Reflect(playerLeft->GetSpeed(), collisionResult.normal);
         playerLeft->SetSpeed(reflected);
     }
 
     collisionResult = Collision::TestCollision(playerRight->GetHitbox(), frameBottom->GetHitbox());
+    if (collisionResult.collided)
     {
         Vector2 reflected = Vector2Reflect(playerRight->GetSpeed(), collisionResult.normal);
         playerRight->SetSpeed(reflected);
     }
 
     collisionResult = Collision::TestCollision(playerRight->GetHitbox(), frameTop->GetHitbox());
+    if (collisionResult.collided)
     {
         Vector2 reflected = Vector2Reflect(playerRight->GetSpeed(), collisionResult.normal);
         playerRight->SetSpeed(reflected);
     }
+
+    // check ball and goalpost collisions
+    collisionResult = Collision::TestCollision(ball->GetHitbox(), goalLeft->GetHitbox());
+    if (collisionResult.collided)
+    {
+        this->IncreasePlayerRightScore();
+        ball->ResetBall(false);
+    }
+
+    collisionResult = Collision::TestCollision(ball->GetHitbox(), goalRight->GetHitbox());
+    if (collisionResult.collided)
+    {
+        this->IncreasePlayerLeftScore();
+        ball->ResetBall(true);
+    }
+
 }
 
 void Game::DispatchEvents()
