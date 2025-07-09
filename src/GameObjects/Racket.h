@@ -1,9 +1,9 @@
 #ifndef RACKET_H
 #define RACKET_H
 
-#include <raylib.h>
-#include "ICollidable.h"
-#include "IMovable.h"
+#include "raylib.h"
+#include "GameMechanics/ICollidable.h"
+#include "GameMechanics/IMovable.h"
 #include "Ball.h"
 
 class Racket : public ICollidable, IMovable

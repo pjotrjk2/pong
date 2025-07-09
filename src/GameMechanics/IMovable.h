@@ -1,8 +1,6 @@
 #ifndef I_MOVABLE_H
 #define I_MOVABLE_H
 
-#include <raylib.h>
-
 class IMovable
 {
 public:

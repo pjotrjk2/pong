@@ -1,7 +1,7 @@
 #include "Collision.h"
 #include <cmath>
 #include <algorithm>
-#include <raymath.h>
+#include "raymath.h"
 
 CollisionResult Collision::TestCollision(const Collider &a, const Collider &b)
 {

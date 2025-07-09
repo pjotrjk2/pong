@@ -1,10 +1,10 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "Ball.h"
-#include "Racket.h"
-#include "Frame.h"
-#include "Goalpost.h"
+#include "GameObjects/Ball.h"
+#include "GameObjects/Racket.h"
+#include "GameObjects/Frame.h"
+#include "GameObjects/Goalpost.h"
 
 class Game
 {

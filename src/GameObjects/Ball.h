@@ -1,9 +1,9 @@
 #ifndef BALL_H
 #define BALL_H
 
-#include <raylib.h>
-#include "IMovable.h"
-#include "ICollidable.h"
+#include "raylib.h"
+#include "GameMechanics/IMovable.h"
+#include "GameMechanics/ICollidable.h"
 
 class Game;
 

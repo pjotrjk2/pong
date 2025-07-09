@@ -1,7 +1,7 @@
 #ifndef FRAME_H
 #define FRAME_H
 
-#include "ICollidable.h"
+#include "GameMechanics/ICollidable.h"
 
 class Frame : public ICollidable
 {

@@ -1,7 +1,7 @@
 #include "CpuRacket.h"
 #include "Racket.h"
 #include "Ball.h"
-#include "raymath.h"
+#include <raymath.h>
 
 void CpuRacket::Update()
 {

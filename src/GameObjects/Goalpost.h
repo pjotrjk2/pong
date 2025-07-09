@@ -1,7 +1,7 @@
 #ifndef GOALPOST_H
 #define GOALPOST_H
 
-#include "ICollidable.h"
+#include "GameMechanics/ICollidable.h"
 
 class Goalpost : ICollidable
 {

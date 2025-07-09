@@ -1,4 +1,7 @@
-#include <raylib.h>
+#include "raylib.h"
+
+#include "resource_dir.h"	// utility header for SearchAndSetResourceDir
+
 #include "Game.h"
 
 class Game;

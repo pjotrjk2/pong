@@ -7,10 +7,5 @@
 		"**/.DS_Store": true,
 		"**/*.o": true,
 		"**/*.exe": true,
-	},
-	"files.associations": {
-		"*.m": "cpp",
-		"format": "cpp",
-		"cmath": "cpp"
 	}
 }

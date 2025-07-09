@@ -1,12 +1,12 @@
-#include <raylib.h>
-#include <raymath.h>
-#include "Ball.h"
-#include "Racket.h"
-#include "CpuRacket.h"
+#include "raylib.h"
+#include "raymath.h"
+#include "GameObjects/Ball.h"
+#include "GameObjects/Racket.h"
+#include "GameObjects/CpuRacket.h"
 #include "Game.h"
-#include "Collision.h"
-#include "Collider.h"
-#include "CollisionResult.h"
+#include "GameMechanics/Collision.h"
+#include "GameMechanics/Collider.h"
+#include "GameMechanics/CollisionResult.h"
 
 Game::Game(bool singlePlayer)
 {
@@ -52,18 +52,18 @@ Game::Game(bool singlePlayer)
 void Game::StartGame()
 {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Perica's pong game");
-    SetTargetFPS(60);
+    SetTargetFPS(FPS);
 }
 
 void Game::Update()
 {
-    ball->Update();
-    playerLeft->Update();
-    playerRight->Update();
-
     CheckCollisions();
 
     DispatchEvents();
+
+    ball->Update();
+    playerLeft->Update();
+    playerRight->Update();
 }
 
 void Game::Draw()

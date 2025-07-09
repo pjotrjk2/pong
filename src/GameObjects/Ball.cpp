@@ -1,8 +1,8 @@
-#include "Ball.h"
-#include "Game.h"
 #include <raylib.h>
 #include <random>
 #include <ctime>
+#include "Ball.h"
+#include "Game.h"
 
 void Ball::Draw()
 {
